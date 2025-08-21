@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.14)
+project(orderbook_api CXX)
+set(CMAKE_CXX_STANDARD 17)
+add_executable(server main.cpp)
+find_package(Threads REQUIRED)
+target_link_libraries(server PRIVATE Threads::Threads)
