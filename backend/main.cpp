@@ -189,6 +189,6 @@ int main(){
         res.set_content(ob.trades_snapshot().dump(), "application/json");
     });
 
-    cout << "C++ OrderBook API listening on http://127.0.0.1:8080\n";
+    // cout << "C++ OrderBook API listening on http://127.0.0.1:8080\n";
     svr.listen("0.0.0.0", 8080);
 }
