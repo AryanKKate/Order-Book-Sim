@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include "external/httplib.h"     
-#include "external/json.hpp"       
+#include "external/json.hpp"    
+#include "MarketStatistics.h"   
 
 using json = nlohmann::json;
 using namespace std;
@@ -38,6 +39,8 @@ class OrderBook {
     vector<Trade> trades;
     long long nextId = 1;
     mutable std::mutex mtx; 
+
+    MarketStatistics stats;
 
 public:
     long long place_limit(Side s, int price, int qty){
@@ -99,6 +102,24 @@ public:
         }
         return jt;
     }
+    json market_stats() const
+{
+    lock_guard<mutex> lk(mtx);
+
+    return stats.marketSnapshot(
+        bestBid(),
+        bestAsk(),
+        bidDepth(),
+        askDepth()
+    );
+}
+
+    json order_stats(long long id) const
+    {
+        lock_guard<mutex> lk(mtx);
+
+        return stats.orderSummary(id);
+    }
 
 private:
     void route_and_match(Order &in){
@@ -123,11 +144,61 @@ private:
                 mk.qty -= execQty; taker.qty -= execQty;
                 Micros lat = chrono::duration_cast<Micros>(Clock::now() - taker.t_recv);
                 trades.push_back({ (taker.side==Side::Buy? taker.id: mk.id), (taker.side==Side::Sell? taker.id: mk.id), execPx, execQty, lat });
+                stats.recordTrade(
+
+                    taker.side==Side::Buy ?
+                        taker.id :
+                        mk.id,
+
+                    taker.side==Side::Sell ?
+                        taker.id :
+                        mk.id,
+
+                    execPx,
+
+                    execQty
+                );
                 if (mk.qty==0){ idx.erase(mk.id); q.pop_front(); }
             }
             if (q.empty()) makerSide.levels.erase(it);
         }
     }
+    int bestBid() const
+{
+    if (bids.empty())
+        return 0;
+
+    return bids.best_price();
+}
+
+int bestAsk() const
+{
+    if (asks.empty())
+        return 0;
+
+    return asks.best_price();
+}
+int bidDepth() const
+{
+    int total = 0;
+
+    for (const auto &level : bids.levels)
+        for (const auto &o : level.second)
+            total += o.qty;
+
+    return total;
+}
+
+int askDepth() const
+{
+    int total = 0;
+
+    for (const auto &level : asks.levels)
+        for (const auto &o : level.second)
+            total += o.qty;
+
+    return total;
+}
 
     void rest(const Order &o){
         if (o.side==Side::Buy){ bids.add(o); idx[o.id] = {Side::Buy, o.price}; }
@@ -187,6 +258,26 @@ int main(){
 
     svr.Get("/trades", [&](const httplib::Request&, httplib::Response &res){
         res.set_content(ob.trades_snapshot().dump(), "application/json");
+    });
+
+    svr.Get("/stats", [&](const httplib::Request&, httplib::Response &res)
+    {
+        res.set_content(
+            ob.market_stats().dump(),
+            "application/json"
+        );
+    });
+
+    svr.Get(R"(/order/(\d+))",
+    [&](const httplib::Request &req,
+        httplib::Response &res)
+    {
+        long long id = stoll(req.matches[1]);
+
+        res.set_content(
+            ob.order_stats(id).dump(),
+            "application/json"
+        );
     });
 
     // cout << "C++ OrderBook API listening on http://127.0.0.1:8080\n";

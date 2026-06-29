@@ -1,118 +1,463 @@
-body {
-  margin: 0;
-  font-family: Inter, system-ui, Arial;
-  background: #0b0f19;
-  color: #e5e7eb;
+/* =======================================
+   GLOBAL
+======================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-.app {
-  padding: 20px;
-  max-width: 1200px;
-  margin: auto;
+body{
+
+    background:#0D1117;
+    color:#E6EDF3;
+
+    font-family:Inter,Segoe UI,sans-serif;
+
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 20px;
+.app{
+
+    width:95%;
+    margin:auto;
+
+    padding:30px;
+
 }
 
-.header h1 {
-  margin: 0;
-  font-size: 28px;
+/* =======================================
+   HEADER
+======================================= */
+
+.header{
+
+    background:#161B22;
+
+    border:1px solid #30363D;
+
+    border-radius:14px;
+
+    padding:25px;
+
+    margin-bottom:25px;
+
+    text-align:center;
+
 }
 
-.header p {
-  color: #9ca3af;
-  font-size: 13px;
+.header h1{
+
+    font-size:34px;
+
+    font-weight:700;
+
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin-bottom: 15px;
+.header p{
+
+    margin-top:8px;
+
+    color:#8B949E;
+
 }
 
-.book-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin-bottom: 15px;
+.header span{
+
+    display:block;
+
+    margin-top:10px;
+
+    color:#58A6FF;
+
+    font-size:14px;
+
 }
 
-.card {
-  background: #111827;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #1f2937;
+/* =======================================
+   KPI CARDS
+======================================= */
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(6,1fr);
+
+    gap:18px;
+
+    margin-bottom:25px;
+
 }
 
-h2 {
-  font-size: 16px;
-  margin-bottom: 10px;
-  color: #f3f4f6;
+.stat-card{
+
+    background:#161B22;
+
+    border:1px solid #30363D;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    text-align:center;
+
+    transition:.2s;
+
 }
 
-label {
-  display: block;
-  font-size: 12px;
-  margin-top: 8px;
-  color: #9ca3af;
+.stat-card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:#58A6FF;
+
 }
 
-input, select {
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  background: #0f172a;
-  border: 1px solid #1f2937;
-  color: white;
-  border-radius: 6px;
+.stat-card span{
+
+    font-size:12px;
+
+    text-transform:uppercase;
+
+    color:#8B949E;
+
 }
 
-button {
-  margin-top: 12px;
-  width: 100%;
-  padding: 10px;
-  background: #2563eb;
-  border: none;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
+.stat-card h2{
+
+    margin-top:10px;
+
+    font-size:30px;
+
+    font-weight:700;
+
 }
 
-button:hover {
-  background: #1d4ed8;
+/* =======================================
+   MAIN GRID
+======================================= */
+
+.main-grid{
+
+    display:grid;
+
+    grid-template-columns:320px 1fr 280px;
+
+    gap:22px;
+
+    margin-bottom:25px;
+
 }
 
-button.danger {
-  background: #dc2626;
+/* =======================================
+   CARD
+======================================= */
+
+.card{
+
+    background:#161B22;
+
+    border:1px solid #30363D;
+
+    border-radius:14px;
+
+    padding:22px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.25);
+
 }
 
-button.danger:hover {
-  background: #b91c1c;
+.card h2{
+
+    margin-bottom:18px;
+
+    font-size:22px;
+
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 12px;
+.card h3{
+
+    margin-top:20px;
+
+    margin-bottom:12px;
+
 }
 
-th, td {
-  padding: 6px;
-  border-bottom: 1px solid #1f2937;
-  text-align: left;
+/* =======================================
+   FORM
+======================================= */
+
+label{
+
+    display:block;
+
+    margin-top:15px;
+
+    margin-bottom:6px;
+
+    color:#8B949E;
+
 }
 
-.orders {
-  font-size: 11px;
-  color: #9ca3af;
+input,
+select{
+
+    width:100%;
+
+    padding:11px;
+
+    border-radius:8px;
+
+    border:1px solid #30363D;
+
+    background:#0D1117;
+
+    color:white;
+
+    outline:none;
+
 }
 
-.msg {
-  margin-top: 10px;
-  font-size: 12px;
-  color: #34d399;
+input:focus,
+select:focus{
+
+    border-color:#58A6FF;
+
+}
+
+button{
+
+    width:100%;
+
+    margin-top:18px;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    background:#238636;
+
+    color:white;
+
+    font-weight:600;
+
+    transition:.2s;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.danger{
+
+    background:#DA3633;
+
+}
+
+.msg{
+
+    margin-top:18px;
+
+    padding:10px;
+
+    background:#1F6FEB22;
+
+    border:1px solid #1F6FEB;
+
+    border-radius:8px;
+
+    color:#58A6FF;
+
+}
+
+hr{
+
+    margin:22px 0;
+
+    border:none;
+
+    border-top:1px solid #30363D;
+
+}
+
+/* =======================================
+   ORDER BOOK
+======================================= */
+
+.book-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:18px;
+
+}
+
+.buy h3{
+
+    color:#3FB950;
+
+    margin-bottom:12px;
+
+}
+
+.sell h3{
+
+    color:#F85149;
+
+    margin-bottom:12px;
+
+}
+
+/* =======================================
+   TABLES
+======================================= */
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+thead{
+
+    background:#21262D;
+
+}
+
+th{
+
+    padding:12px;
+
+    font-size:13px;
+
+    color:#8B949E;
+
+    text-transform:uppercase;
+
+}
+
+td{
+
+    padding:11px;
+
+    border-bottom:1px solid #30363D;
+
+    text-align:center;
+
+    font-size:14px;
+
+}
+
+tbody tr:nth-child(even){
+
+    background:#11161D;
+
+}
+
+tbody tr:hover{
+
+    background:#1B2330;
+
+}
+
+.orders{
+
+    font-size:12px;
+
+    color:#8B949E;
+
+}
+
+/* =======================================
+   MARKET STATS
+======================================= */
+
+.stat-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #30363D;
+
+}
+
+.stat-row:last-child{
+
+    border-bottom:none;
+
+}
+
+.stat-row span{
+
+    color:#8B949E;
+
+}
+
+.stat-row strong{
+
+    color:white;
+
+}
+
+/* =======================================
+   TRADES
+======================================= */
+
+.trades-card{
+
+    margin-top:20px;
+
+}
+
+/* =======================================
+   RESPONSIVE
+======================================= */
+
+@media(max-width:1200px){
+
+    .main-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .stats-grid{
+
+        grid-template-columns:repeat(3,1fr);
+
+    }
+
+}
+
+@media(max-width:700px){
+
+    .stats-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .book-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
 }
