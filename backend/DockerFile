@@ -1,10 +1,18 @@
 FROM gcc:latest
 
+RUN apt-get update && apt-get install -y cmake
+
 WORKDIR /app
 
 COPY . .
 
-RUN g++ -O2 -std=c++17 main.cpp -o server
+RUN mkdir build
+
+WORKDIR /app/build
+
+RUN cmake ..
+
+RUN cmake --build .
 
 EXPOSE 8080
 
